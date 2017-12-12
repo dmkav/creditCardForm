@@ -4,9 +4,9 @@ import {HomeComponent} from '../components/home/home.component';
 import {CardValidationComponent} from '../components/card-validation/card-validation.component';
 
 const routes: Routes = [
-  { path: 'home', component: HomeComponent },
+  { path: '', component: HomeComponent },
   { path: 'card-validation', component: CardValidationComponent },
-  { path: '**', redirectTo: 'home' }
+  { path: '**', redirectTo: '' }
 ];
 
 @NgModule({
