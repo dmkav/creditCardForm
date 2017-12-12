@@ -1,6 +1,6 @@
 <h1>Card validation</h1>
 
-<form [formGroup]="form" (submit)="formSubmit()" class="form" #formDir="ngForm" novalidate>
+<form [formGroup]="form" (submit)="submitForm()" class="form" #formDir="ngForm" novalidate>
   <div class="form-group">
     <label for="owner">Name:</label>
     <input
@@ -77,7 +77,7 @@
     <div class="invalid-feedback" *ngIf="formDir.submitted">
       <span *ngIf="form.controls.cvv.errors?.required">This field should not be empty.</span>
       <span *ngIf="form.controls.cvv.errors?.pattern && !form.controls.cvv.errors?.required">This field is incorrect. Only numbers allowed.</span>
-      <span *ngIf="form.controls.cvv.errors?.minlength && !form.controls.cvv.errors?.required">CVV length should be not more then 3 symbols.</span>
+      <span *ngIf="form.controls.cvv.errors?.minlength && !form.controls.cvv.errors?.required">CVV length should contain 3 symbols.</span>
     </div>
   </div>
 

@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
-import {Observable} from "rxjs/Observable";
-import {Card} from "../models/Card";
+import {Observable} from 'rxjs/Observable';
+import {Card} from '../models/Card';
 import 'rxjs/add/observable/of';
-import {Message} from "../models/Message";
+import {Message} from '../models/Message';
 
 @Injectable()
 export class BuyService {

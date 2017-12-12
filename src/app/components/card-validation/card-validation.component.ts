@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import {FormBuilder, FormControl, FormGroup, Validators, AbstractControl} from "@angular/forms";
-import {BuyService} from "../../services/buy.service";
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {BuyService} from '../../services/buy.service';
 import {validateExpiration} from '../../validators/expirationValidator';
-import {Card} from "../../models/Card";
-import {Message} from "../../models/Message";
-import {validateNumbers} from "../../validators/luhnAlgorithmValidator";
+import {validateNumbers} from '../../validators/luhnAlgorithmValidator';
+import {Card} from '../../models/Card';
+import {Message} from '../../models/Message';
+
 @Component({
   selector: 'app-card-validation',
   templateUrl: './card-validation.component.html',
@@ -18,6 +19,7 @@ export class CardValidationComponent implements OnInit {
   cvvPattern = new RegExp(/^[0-9]*$/);
 
   constructor(private fb: FormBuilder, private buyService: BuyService) {
+    /* Initialize form */
     this.form = this.fb.group({
       owner: ['', [Validators.required, Validators.pattern(this.charsPattern)]],
       number: ['', [Validators.required, validateNumbers]],
@@ -26,7 +28,7 @@ export class CardValidationComponent implements OnInit {
     });
   }
 
-  formSubmit(): void {
+  submitForm(): void {
     const form = this.form;
     if (form.valid) {
       form.disable();
@@ -36,14 +38,13 @@ export class CardValidationComponent implements OnInit {
         expire: form.get('expiration').value,
         cvv: +form.get('cvv').value
       };
-      this.buyService.buyAttempt(this.card).subscribe(result => {
+      this.buyService.buyAttempt(this.card).subscribe((result: Message) => {
         this.showMessage(result);
       });
     }
-
   }
 
-  private showMessage(result): void {
+  private showMessage(result: Message): void {
     this.message = result;
   }
   ngOnInit() {
