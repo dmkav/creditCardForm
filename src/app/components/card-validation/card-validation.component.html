@@ -1,0 +1,86 @@
+<h1>Card validation</h1>
+
+<form [formGroup]="form" (submit)="formSubmit()" class="form" #formDir="ngForm" novalidate>
+  <div class="form-group">
+    <label for="owner">Name:</label>
+    <input
+      formControlName="owner"
+      type="text"
+      class="form-control"
+      id="owner"
+      placeholder="Enter your full name"
+      [ngClass]="{
+      'is-invalid': (formDir.submitted && form.controls.owner.invalid),
+      'is-valid': (formDir.submitted && form.controls.owner.valid)
+      }"
+    >
+    <div class="invalid-feedback" *ngIf="formDir.submitted">
+      <span *ngIf="form.controls.owner.errors?.required">This field should not be empty.</span>
+      <span *ngIf="form.controls.owner.errors?.pattern && !form.controls.owner.errors?.required">This field is incorrect. Only characters, spaces and - allowed.</span>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="number">Card number:</label>
+    <input
+      formControlName="number"
+      type="text"
+      class="form-control"
+      id="number"
+      placeholder="Your card number"
+      [ngClass]="{
+       'is-invalid': (formDir.submitted && form.controls.number.invalid),
+      'is-valid': (formDir.submitted && form.controls.number.valid)
+      }"
+    >
+    <div class="invalid-feedback" *ngIf="formDir.submitted">
+      <span *ngIf="form.controls.number.errors?.required">This field should not be empty.</span>
+      <span *ngIf="form.controls.number.errors?.number && !form.controls.number.errors?.required">This field is incorrect. Only numbers and spaces allowed.</span>
+      <span *ngIf="form.controls.number.errors?.luhnAlgorithm && !form.controls.number.errors?.required">You made typo in card number!</span>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="expiration">Card expiration date:</label>
+    <input
+      formControlName="expiration"
+      type="text"
+      class="form-control"
+      id="expiration"
+      placeholder="Allowed format MM/YY or MM/YYYY"
+      [ngClass]="{
+       'is-invalid': (formDir.submitted && form.controls.expiration.invalid),
+       'is-valid': (formDir.submitted && form.controls.expiration.valid)
+      }"
+    >
+    <div class="invalid-feedback" *ngIf="formDir.submitted">
+      <span *ngIf="form.controls.expiration.errors?.required">This field should not be empty.</span>
+      <span *ngIf="form.controls.expiration.errors?.pattern && !form.controls.expiration.errors?.required">This field is incorrect. Check format and date.</span>
+      <span *ngIf="form.controls.expiration.errors?.expired && !form.controls.expiration.errors?.required">Your card has been already expired.</span>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="cvv">CVV:</label>
+    <input
+      formControlName="cvv"
+      type="text"
+      class="form-control"
+      id="cvv"
+      placeholder="Your card number"
+      maxlength="3"
+      [ngClass]="{
+       'is-invalid': (formDir.submitted && form.controls.cvv.invalid),
+       'is-valid': (formDir.submitted && form.controls.cvv.valid)
+      }"
+    >
+    <div class="invalid-feedback" *ngIf="formDir.submitted">
+      <span *ngIf="form.controls.cvv.errors?.required">This field should not be empty.</span>
+      <span *ngIf="form.controls.cvv.errors?.pattern && !form.controls.cvv.errors?.required">This field is incorrect. Only numbers allowed.</span>
+      <span *ngIf="form.controls.cvv.errors?.minlength && !form.controls.cvv.errors?.required">CVV length should be not more then 3 symbols.</span>
+    </div>
+  </div>
+
+  <button type="submit" class="btn btn-primary btn-lg btn-block btn-success">Buy</button>
+</form>
+<app-message [message]="message"></app-message>
